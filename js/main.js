@@ -63,6 +63,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Contact Form Handling
     const contactForm = document.getElementById('contactForm');
+    const captchaLabel = document.getElementById('captchaLabel');
+
+    // Function to load dynamic captcha
+    function loadCaptcha() {
+        if (captchaLabel) {
+            console.log('Fetching captcha...');
+            fetch('get_captcha.php?t=' + new Date().getTime())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Captcha loaded:', data);
+                    captchaLabel.innerText = `Pregunta de seguridad: ${data.question} *`;
+                })
+                .catch(err => {
+                    console.error('Error loading captcha:', err);
+                    captchaLabel.innerText = 'Pregunta de seguridad: Error al cargar (Recarga la página) *';
+                });
+        }
+    }
+
+    // Load captcha on page load
+    loadCaptcha();
+
     if (contactForm) {
         contactForm.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -92,10 +119,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         statusDiv.style.color = '#155724';
                         statusDiv.style.border = '1px solid #c3e6cb';
                         contactForm.reset();
+                        loadCaptcha(); // Refresh captcha
                     } else {
                         statusDiv.style.backgroundColor = '#f8d7da';
                         statusDiv.style.color = '#721c24';
                         statusDiv.style.border = '1px solid #f5c6cb';
+                        loadCaptcha(); // Refresh captcha
                     }
                 })
                 .catch(error => {

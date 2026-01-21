@@ -1,8 +1,9 @@
 <?php
+session_start();
 header('Content-Type: application/json');
 
 // Anti-spam configuration
-$honeypot_field = 'website_url'; // Using a deceptive name for the hidden field
+$honeypot_field = 'website_url';
 
 $response = [
   'success' => false,
@@ -11,17 +12,26 @@ $response = [
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-  // 1. Honeypot Check (Bot Protection)
-  // If the hidden field is filled, it's likely a bot.
+  // 1. Honeypot Check
   if (!empty($_POST[$honeypot_field])) {
-    // Pretend success to fool the bot, but do nothing.
     $response['success'] = true;
     $response['message'] = 'Mensaje enviado correctamente.';
     echo json_encode($response);
     exit;
   }
 
-  // 2. Sanitize and Validate Inputs
+  // 2. Dynamic Captcha Validation
+  $captcha_input = intval($_POST["captcha"]);
+  $captcha_correct = isset($_SESSION['captcha_result']) ? $_SESSION['captcha_result'] : null;
+
+  if ($captcha_correct === null || $captcha_input !== $captcha_correct) {
+    $response['message'] = 'La respuesta de seguridad es incorrecta. Por favor intenta con la nueva pregunta.';
+    http_response_code(400);
+    echo json_encode($response);
+    exit;
+  }
+
+  // 3. Sanitize and Validate Inputs
   $name = strip_tags(trim($_POST["nombre"]));
   $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
   $phone = strip_tags(trim($_POST["telefono"]));
@@ -36,25 +46,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit;
   }
 
-  // 3. Email Configuration
+  // 4. Email Configuration
   $recipient = "guillermo.diarte@gmail.com";
   $email_subject = "Nuevo Contacto Web: $subject";
 
   $email_content = "Has recibido un nuevo mensaje desde tu sitio web.\n\n";
   $email_content .= "Nombre: $name\n";
-  $email_content .= "Teléfono: " . ($phone ? $phone : 'No especificado') . "\n";
+  $email_content .= "Teléfono: $phone\n";
   $email_content .= "Email: " . ($email ? $email : 'No especificado') . "\n\n";
   $email_content .= "Mensaje:\n$message\n";
 
-  $headers = "From: Odontología Estética Salta <noreply@tudominio.com>\r\n"; // Replace with actual domain sender if available
+  $headers = "From: web@odesteticasalta.com\r\n";
   if (!empty($email)) {
     $headers .= "Reply-To: $email\r\n";
   }
 
-  // 4. Send Email
+  // 5. Send Email
   if (mail($recipient, $email_subject, $email_content, $headers)) {
     $response['success'] = true;
     $response['message'] = '¡Gracias! Tu mensaje ha sido enviado.';
+    // Clear captcha after success
+    unset($_SESSION['captcha_result']);
     http_response_code(200);
   } else {
     $response['message'] = 'Hubo un error al enviar el mensaje. Por favor intenta más tarde o contáctanos por WhatsApp.';
