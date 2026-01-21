@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto | Odontología Estética Salta</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="main-header">
+    <div class="container header-container">
+      <div class="logo">
+        <a href="index.html">
+          <img src="img/logo2.png" alt="Odontología Estética Salta" class="logo-img">
+          <h1>Odontología Estética <span>Salta</span></h1>
+        </a>
+      </div>
+      <button class="mobile-menu-btn" aria-label="Menu"><span></span><span></span><span></span></button>
+      <nav class="nav-links">
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="about.html">Sobre Mí</a></li>
+          <li><a href="services.html">Tratamientos</a></li>
+          <li><a href="contact.html" class="active">Contacto</a></li>
+          <li><a href="https://api.whatsapp.com/send?phone=5493876157724&text=Hola,%20quiero%20solicitar%20un%20turno"
+              class="btn btn-primary btn-sm" target="_blank"><i class="fa-brands fa-whatsapp"></i> Turnos</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container">
+      <h2>Contacto</h2>
+      <p>Estamos aquí para responder tus consultas</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid grid-2">
+
+        <!-- Contact Info -->
+        <div class="contact-info fade-in">
+          <h3>Encontranos</h3>
+          <ul class="contact-list">
+            <li>
+              <i class="fa-solid fa-location-dot"></i>
+              <div>
+                <strong>Dirección:</strong>
+                <p><a href="https://maps.app.goo.gl/n6bjgF2zBr8LWMm39" target="_blank">12 de Octubre 226, Salta
+                    Capital</a></p>
+              </div>
+            </li>
+            <li>
+              <i class="fa-brands fa-whatsapp"></i>
+              <div>
+                <strong>WhatsApp:</strong>
+                <p><a
+                    href="https://api.whatsapp.com/send?phone=5493876157724&text=Hola,%20quiero%20solicitar%20un%20turno"
+                    target="_blank">(0387) 156157724</a></p>
+              </div>
+            </li>
+            <li>
+              <i class="fa-regular fa-envelope"></i>
+              <div>
+                <strong>Email:</strong>
+                <p>odrominan@gmail.com</p>
+              </div>
+            </li>
+          </ul>
+          <div class="map-container mt-4">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3622.5945152395025!2d-65.40697512402137!3d-24.77508817798508!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x941bc3ea83b2a8d3%3A0xa45f61596bd12efd!2s12%20de%20Octubre%20226%2C%20Salta!5e0!3m2!1ses!2sar!4v1696468947145!5m2!1ses!2sar"
+              width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form-container fade-in">
+          <h3>Envianos un Mensaje</h3>
+          <form id="contactForm" action="send_mail.php" method="post" class="contact-form">
+            <!-- Honeypot for bots (Hidden) -->
+            <div style="display:none;">
+              <label for="website_url">No llenar si eres humano</label>
+              <input type="text" id="website_url" name="website_url">
+            </div>
+
+            <div class="form-group">
+              <label for="nombre">Nombre *</label>
+              <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Tu nombre" required>
+            </div>
+
+            <div class="form-group">
+              <label for="telefono">Teléfono *</label>
+              <input type="tel" id="telefono" name="telefono" class="form-control"
+                placeholder="Tu número (Solo números)" required pattern="[0-9]+" inputmode="numeric"
+                title="Por favor ingresa solo números.">
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" class="form-control" placeholder="Tu email (Opcional)">
+            </div>
+
+            <div class="form-group">
+              <label for="asunto">Asunto *</label>
+              <input type="text" id="asunto" name="asunto" class="form-control" placeholder="Asunto" required>
+            </div>
+
+            <div class="form-group">
+              <label for="mensaje">Mensaje *</label>
+              <textarea id="mensaje" name="mensaje" rows="5" class="form-control"
+                placeholder="¿En qué podemos ayudarte?" required></textarea>
+            </div>
+
+            <div id="formStatus" class="form-status"
+              style="display: none; margin-bottom: 1rem; padding: 10px; border-radius: 5px;"></div>
+
+            <button type="submit" class="btn btn-primary btn-block">Enviar Mensaje</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container">
+      <div class="grid grid-3">
+        <div class="footer-col">
+          <h3>Odontología Estética Salta</h3>
+          <p>Cuidamos tu salud bucal con profesionalismo y dedicación.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Contacto</h3>
+          <ul>
+            <li><i class="fa-solid fa-location-dot"></i> 12 de Octubre 226, Salta Capital</li>
+            <li><i class="fa-brands fa-whatsapp"></i> (0387) 156157724</li>
+            <li><i class="fa-regular fa-envelope"></i> odrominan@gmail.com</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Redes Sociales</h3>
+          <div class="social-links">
+            <a href="https://www.facebook.com/www.tumejorsonrisa.com.ar/" target="_blank"><i
+                class="fa-brands fa-facebook"></i></a>
+            <a href="https://www.instagram.com/odontologia_estetica_salta/" target="_blank"><i
+                class="fa-brands fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom text-center">
+        <p>&copy; 2024 Odontología Estética Salta. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>
