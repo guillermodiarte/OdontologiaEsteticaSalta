@@ -74,7 +74,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
-                    return response.json();
+                    return response.text().then(text => {
+                        try {
+                            return JSON.parse(text);
+                        } catch (e) {
+                            console.error('Server returned non-JSON:', text);
+                            throw new Error('Invalid JSON response');
+                        }
+                    });
                 })
                 .then(data => {
                     console.log('Captcha loaded:', data);
@@ -82,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
                 .catch(err => {
                     console.error('Error loading captcha:', err);
-                    captchaLabel.innerText = 'Pregunta de seguridad: Error al cargar (Recarga la página) *';
+                    captchaLabel.innerText = 'Pregunta de seguridad: Error de conexión (Intenta recargar) *';
                 });
         }
     }

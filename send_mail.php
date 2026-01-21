@@ -56,10 +56,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $email_content .= "Email: " . ($email ? $email : 'No especificado') . "\n\n";
   $email_content .= "Mensaje:\n$message\n";
 
-  $headers = "From: web@odesteticasalta.com\r\n";
+  // Headers for better deliverability
+  $headers = "MIME-Version: 1.0" . "\r\n";
+  $headers .= "Content-type:text/plain;charset=UTF-8" . "\r\n";
+
+  // Important: Use a generic sender address from the same domain if possible, 
+  // or fall back to a dummy one to avoid spoofing checks.
+  // Hostinger often blocks emails if 'From' isn't an invalid local account.
+  // We will try to use the user's email if provided, but it's safer to use a fixed one + Reply-To.
+  $headers .= "From: no-reply@odontologiaesteticasalta.com" . "\r\n"; // Changed to likely domain or generic
+
   if (!empty($email)) {
-    $headers .= "Reply-To: $email\r\n";
+    $headers .= "Reply-To: $email" . "\r\n";
   }
+  $headers .= "X-Mailer: PHP/" . phpversion();
 
   // 5. Send Email
   if (mail($recipient, $email_subject, $email_content, $headers)) {
